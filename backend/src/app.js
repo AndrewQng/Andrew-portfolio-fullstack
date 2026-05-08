@@ -40,12 +40,14 @@ function createApp() {
     const projectRoutes = require('./presentation/routes/projectRoutes');
     const skillRoutes = require('./presentation/routes/skillRoutes');
     const certificationRoutes = require('./presentation/routes/certificationRoutes');
+    const userRoutes = require('./presentation/routes/userRoutes');
 
     app.use('/api/auth', authRoutes);
     app.use('/api/admin', adminRoutes);
     app.use('/api/projects', projectRoutes);
     app.use('/api/skills', skillRoutes);
     app.use('/api/certifications', certificationRoutes);
+    app.use('/api/users', userRoutes);
 
     app.use((err, _req, res, _next) => {
         const status = err.statusCode || err.status || 500;
