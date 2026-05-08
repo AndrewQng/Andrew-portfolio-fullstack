@@ -1,0 +1,15 @@
+Personal Portfolio Website (Frontend First)
+
+- Responsive modern UI/UX
+- Hero section giới thiệu bản thân & kỹ năng
+- Portfolio projects showcase
+- Skills & tech stack visualization
+- Experience timeline
+- Dark mode support
+- Smooth animations & transitions
+- Contact form & social links
+- Download CV feature
+- Optimized performance & SEO
+
+Tech Stack:
+React / Next.js + TailwindCSS + Framer Motion

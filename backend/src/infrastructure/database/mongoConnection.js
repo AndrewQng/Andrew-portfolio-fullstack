@@ -29,7 +29,10 @@ async function connectDB() {
         serverSelectionTimeoutMS: 10000
     };
 
-    cache.promise = mongoose.connect(process.env.MONGO_URI, opts).then(() => mongoose.connection);
+    cache.promise = mongoose.connect(process.env.MONGO_URI, opts).then(() => {
+        console.log('🚀 [Database] Kết nối MongoDB thành công!');
+        return mongoose.connection;
+    });
     cache.conn = await cache.promise;
     return cache.conn;
 }
