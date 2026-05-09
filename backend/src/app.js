@@ -22,7 +22,7 @@ function buildCorsOptions() {
         // Ở development, phản chiếu origin động kèm credentials để tiện lợi phát triển
         return { origin: true, credentials: true };
     }
-    const origins = raw.split(',').map((s) => s.trim()).filter(Boolean);
+    const origins = raw.split(',').map((s) => s.trim().replace(/\/$/, '')).filter(Boolean);
     return {
         origin: origins.length === 1 ? origins[0] : origins,
         credentials: true
