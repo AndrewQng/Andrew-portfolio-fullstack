@@ -1,7 +1,14 @@
 import axios from 'axios';
 
+let rawBaseUrl = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || '';
+
+// Tuot dong append /api neu thieu trong cau hinh Vercel env
+if (rawBaseUrl && !rawBaseUrl.endsWith('/api') && !rawBaseUrl.endsWith('/api/')) {
+    rawBaseUrl = rawBaseUrl.replace(/\/$/, '') + '/api';
+}
+
 const apiClient = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL,
+    baseURL: rawBaseUrl,
     headers: {
         'Content-Type': 'application/json',
     },
