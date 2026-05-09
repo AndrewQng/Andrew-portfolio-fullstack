@@ -7,11 +7,20 @@ const apiClient = axios.create({
     },
 });
 
+let memoryToken = null;
+
+export const setToken = (token) => {
+    memoryToken = token;
+};
+
 apiClient.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
+        // Luôn gửi kèm HttpOnly Cookie
+        config.withCredentials = true;
+
+        // Nếu có Token trong RAM thì gửi lên header
+        if (memoryToken) {
+            config.headers.Authorization = `Bearer ${memoryToken}`;
         }
         return config;
     },

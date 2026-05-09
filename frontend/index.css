@@ -5,10 +5,11 @@
 /* Custom cuộn trang mượt mà */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* Bù trừ chiều cao thanh Navbar (h-16 + padding) */
 }
 
 body {
-  @apply bg-gray-900 text-gray-100;
+  @apply bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300;
   overflow-x: hidden;
 }
 

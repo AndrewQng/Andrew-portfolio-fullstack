@@ -25,7 +25,14 @@ const UserSchema = new mongoose.Schema({
     },
 
     // Mạng xã hội
-    socialLinks: [SocialLinkSchema]
+    socialLinks: [SocialLinkSchema],
+
+    // Cài đặt giao diện (Settings)
+    theme: {
+        primaryColor: { type: String, default: '#3b82f6' }, // Xanh dương (blue-500)
+        secondaryColor: { type: String, default: '#9333ea' }, // Tím (purple-600)
+        mode: { type: String, default: 'dark', enum: ['dark', 'light'] }
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', UserSchema);

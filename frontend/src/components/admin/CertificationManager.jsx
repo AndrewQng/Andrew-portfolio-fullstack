@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { FaTrash, FaPlus, FaExternalLinkAlt } from 'react-icons/fa';
-import { getAllCertifications, createCertification, deleteCertification } from '../../services/certificationService';
+import { getAllCertifications, createCertification, deleteCertification } from '../../services/certificationService.js';
+import { useToast } from '../../context/ToastContext.jsx'; // Import Hook
 import Button from '../ui/Button.jsx';
 import Modal from '../ui/Modal.jsx';
 import CertificationForm from './CertificationForm.jsx';
@@ -8,26 +9,44 @@ import CertificationForm from './CertificationForm.jsx';
 const CertificationManager = () => {
     const [certs, setCerts] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const { showToast } = useToast(); // Lấy hàm showToast ra dùng
 
     useEffect(() => {
         fetchCerts();
     }, []);
 
     const fetchCerts = async () => {
-        const data = await getAllCertifications();
-        setCerts(data);
+        try {
+            const data = await getAllCertifications();
+            setCerts(data);
+        } catch (error) {
+            showToast('Không thể tải dữ liệu chứng chỉ!', 'error');
+        }
     };
 
     const handleSave = async (data) => {
-        await createCertification(data);
-        fetchCerts();
-        setIsModalOpen(false);
+        try {
+            await createCertification(data);
+            fetchCerts();
+            setIsModalOpen(false);
+            showToast('🎉 Thêm chứng chỉ thành công!', 'success');
+        } catch (error) {
+            // Lấy message từ server, nếu không có thì dùng câu cứng
+            const errorMsg = error.response?.data?.message || 'Lỗi khi lưu chứng chỉ!';
+            showToast(errorMsg, 'error');
+        }
     };
 
     const handleDelete = async (id) => {
         if (window.confirm('Xóa bản ghi này?')) {
-            await deleteCertification(id);
-            setCerts(certs.filter(c => (c._id || c.id) !== id));
+            try {
+                await deleteCertification(id);
+                setCerts(certs.filter(c => (c._id || c.id) !== id));
+                showToast('🗑️ Đã xóa chứng chỉ thành công!', 'success');
+            } catch (error) {
+                const errorMsg = error.response?.data?.message || 'Lỗi khi xóa chứng chỉ!';
+                showToast(errorMsg, 'error');
+            }
         }
     };
 
@@ -63,7 +82,7 @@ const CertificationManager = () => {
                                     ) : '-'}
                                 </td>
                                 <td className="p-4 flex justify-end">
-                                    <Button variant="danger" size="sm" icon={FaTrash} onClick={() => handleDelete(cert._id || cert.id)} />
+                                    <Button variant="danger" size="sm" icon={FaTrash} onClick={() => handleDelete(cert._id || cert.id)}>Xóa</Button>
                                 </td>
                             </tr>
                         ))}

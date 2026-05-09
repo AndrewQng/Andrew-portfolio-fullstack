@@ -2,9 +2,8 @@ import { useState } from 'react';
 import AdminLayout from '../components/layout/AdminLayout.jsx';
 import ProjectManager from '../components/admin/ProjectManager.jsx';
 import ProfileManager from '../components/admin/ProfileManager.jsx';
-
-// Import sẵn chờ ông đắp nốt vào Sidebar
-// import SkillManager from '../components/admin/SkillManager.jsx';
+import SkillManager from '../components/admin/SkillManager.jsx';
+import SettingsManager from '../components/admin/SettingsManager.jsx';
 // import CertificationManager from '../components/admin/CertificationManager.jsx';
 
 const AdminDashboard = () => {
@@ -18,16 +17,14 @@ const AdminDashboard = () => {
             {activeTab === 'projects' && <ProjectManager />}
             
             {activeTab === 'skills' && (
-                <div>
-                    <h2 className="text-3xl font-bold mb-6">Quản lý Kỹ năng</h2>
-                    <p className="text-gray-400">Giao diện CRUD Kỹ năng (Đang thi công...)</p>
-                    {/* Bỏ 2 dòng trên và mở comment dòng dưới nếu ông đã code xong SkillManager */}
-                    {/* <SkillManager /> */}
-                </div>
+                <SkillManager />
             )}
             
             {/* Tích hợp thành công giao diện Profile ở đây */}
             {activeTab === 'profile' && <ProfileManager />}
+
+            {/* Quản lý cài đặt tông màu */}
+            {activeTab === 'settings' && <SettingsManager />}
 
             {/* Dành cho chứng chỉ và hành trình (Timeline) */}
             {/* {activeTab === 'certifications' && <CertificationManager />} */}

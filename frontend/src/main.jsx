@@ -2,15 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
-import { ToastProvider } from './context/ToastContext.jsx'; // 1. Import Provider
+import { ToastProvider } from './context/ToastContext.jsx';
+import { ThemeProvider } from './context/ThemeContext.jsx';
 import '../index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AuthProvider>
-      <ToastProvider> {/* 2. Bọc nó bên ngoài App */}
-        <App />
-      </ToastProvider>
+      <ThemeProvider>
+        <ToastProvider>
+          <App />
+        </ToastProvider>
+      </ThemeProvider>
     </AuthProvider>
   </React.StrictMode>,
 );

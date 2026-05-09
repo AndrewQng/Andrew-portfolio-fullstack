@@ -11,7 +11,8 @@ class User {
         avatar,
         resumeUrl,
         bio = { short: '', full: '' },
-        socialLinks = []
+        socialLinks = [],
+        theme
     }) {
         this.id = id;
         this.username = username;
@@ -25,6 +26,7 @@ class User {
         this.resumeUrl = resumeUrl;
         this.bio = bio;
         this.socialLinks = socialLinks;
+        this.theme = theme || { primaryColor: '#3b82f6', secondaryColor: '#9333ea', mode: 'dark' };
 
         this.validate();
     }

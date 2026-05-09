@@ -10,8 +10,8 @@ export default {
       colors: {
         // Có thể thêm màu thương hiệu riêng của ông ở đây
         primary: {
-          500: '#3b82f6', // Xanh lam chuẩn
-          600: '#2563eb',
+          500: 'var(--color-primary)',
+          600: 'var(--color-secondary)',
         },
         dark: {
           900: '#0f172a', // Nền tối
@@ -19,7 +19,7 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'], // Font chữ hiện đại, dễ đọc
+        sans: ['"Be Vietnam Pro"', 'sans-serif'],
       }
     },
   },

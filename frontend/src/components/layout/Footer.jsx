@@ -32,31 +32,40 @@ const Footer = () => {
     const middleName = nameParts.length > 1 ? nameParts[nameParts.length - 2] : '';
 
     return (
-        <footer className="bg-gray-950 border-t border-gray-800 py-10">
+        <footer className="border-t border-gray-200 dark:border-gray-800 py-10 transition-colors duration-300 relative z-10">
             <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
                 <div className="text-center md:text-left">
                     <h3 className="text-xl font-bold tracking-wider mb-2">
-                        <span className="text-blue-500">{middleName} </span>
-                        <span className="text-white">{lastName}</span>
+                        <span style={{ color: 'var(--color-primary)' }}>{middleName} </span>
+                        <span className="text-gray-900 dark:text-white transition-colors duration-300">{lastName}</span>
                     </h3>
-                    <p className="text-gray-500 text-sm">{profile?.jobTitle || 'Xây dựng phần mềm với sự tỉ mỉ.'}</p>
+                    <p className="text-gray-500 text-sm transition-colors duration-300 mb-4">{profile?.jobTitle || 'Xây dựng phần mềm với sự tỉ mỉ.'}</p>
+                    
+                    <div className="flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300">
+                        {profile?.email && <p>Email: {profile.email}</p>}
+                        {profile?.phone && <p>SĐT: {profile.phone}</p>}
+                        {profile?.address && <p>Địa chỉ: {profile.address}</p>}
+                    </div>
                 </div>
 
-                <div className="flex gap-6 text-gray-400">
+                <div className="flex gap-6 text-gray-500 dark:text-gray-400">
                     {profile?.socialLinks?.map((social, index) => (
                         <a 
                             key={index} 
                             href={social.url} 
                             target="_blank" 
                             rel="noreferrer"
-                            className="hover:text-blue-500 transition-colors"
+                            className="transition-colors hover:text-gray-900 dark:hover:text-white"
+                            style={{ '--hover-color': 'var(--color-primary)' }}
+                            onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-primary)'}
+                            onMouseLeave={(e) => e.currentTarget.style.color = ''}
                         >
                             {getSocialIcon(social.platform)}
                         </a>
                     ))}
                 </div>
             </div>
-            <div className="text-center mt-8 text-gray-600 text-sm">
+            <div className="text-center mt-8 text-gray-400 dark:text-gray-600 text-sm transition-colors duration-300">
                 &copy; {currentYear} {profile?.fullName || 'Nguyen Manh Quyen'}. All rights reserved.
             </div>
         </footer>

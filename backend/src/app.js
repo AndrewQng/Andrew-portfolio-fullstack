@@ -12,7 +12,8 @@ if (!process.env.VERCEL) {
 function buildCorsOptions() {
     const raw = process.env.FRONTEND_URL;
     if (!raw) {
-        return { origin: true, credentials: false };
+        // origin: true sẽ tự động lấy Origin của request gửi tới (http://localhost:5173)
+        return { origin: true, credentials: true };
     }
     const origins = raw.split(',').map((s) => s.trim()).filter(Boolean);
     return {

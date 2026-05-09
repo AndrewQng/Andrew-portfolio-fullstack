@@ -4,7 +4,8 @@ export const useForm = (initialState) => {
     const [formData, setFormData] = useState(initialState);
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, type, checked, value: targetValue } = e.target;
+        const value = type === 'checkbox' ? checked : targetValue;
         if (name.includes('.')) {
             const [parent, child] = name.split('.');
             setFormData(prev => ({

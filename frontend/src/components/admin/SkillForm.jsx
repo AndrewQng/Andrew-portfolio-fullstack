@@ -1,60 +1,56 @@
 import Input from '../ui/Input.jsx';
 import Select from '../ui/Select.jsx';
-import TextArea from '../ui/TextArea.jsx';
 import Button from '../ui/Button.jsx';
 import { useForm } from '../../hooks/useForm';
 
-const ProjectForm = ({ onSave, onCancel, initialData }) => {
+const SkillForm = ({ onSave, onCancel, initialData }) => {
     const { formData, handleChange } = useForm(initialData || {
-        title: '',
-        slug: '',
-        category: 'Game', // Giá trị từ ProjectCategory Enum 
-        status: 'COMPLETED',
-        description: { short: '', full: '' },
-        thumbnail: '',
-        links: { repo: '', live: '', download: '' }
+        name: '',
+        category: 'Frontend', // Khớp với SkillCategory
+        level: 'Intermediate', // Khớp với SkillLevel
+        iconUrl: '',
+        displayOrder: 0
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSave(formData); // Gửi dữ liệu về Manager để gọi ProjectController.create [cite: 14]
+        onSave({
+            ...formData,
+            displayOrder: Number(formData.displayOrder) || 0
+        });
     };
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-2 gap-4">
-                <Input label="Tiêu đề" name="title" value={formData.title} onChange={handleChange} required />
-                <Input label="Slug (URL)" name="slug" value={formData.slug} onChange={handleChange} required />
+                <Input label="Tên kỹ năng" name="name" value={formData.name} onChange={handleChange} required />
+                <Input label="Icon URL (SVG/Image link)" name="iconUrl" value={formData.iconUrl} onChange={handleChange} />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
                 <Select 
                     label="Danh mục" name="category" value={formData.category} onChange={handleChange}
-                    options={['Game', 'Mobile', 'Web', 'Art']} // Khớp với ProjectCategory [cite: 9]
+                    options={['Frontend', 'Backend', 'Game Dev', 'Mobile', 'Tools', 'Language']} 
                 />
                 <Select 
-                    label="Trạng thái" name="status" value={formData.status} onChange={handleChange}
-                    options={['PLANNING', 'ONGOING', 'COMPLETED']} // Khớp với ProjectStatus [cite: 9]
+                    label="Mức độ thành thạo" name="level" value={formData.level} onChange={handleChange}
+                    options={['Beginner', 'Intermediate', 'Advanced', 'Expert']} 
                 />
             </div>
 
-            <TextArea label="Mô tả ngắn" name="description.short" value={formData.description.short} onChange={handleChange} required />
-            <Input label="Link ảnh Thumbnail" name="thumbnail" value={formData.thumbnail} onChange={handleChange} required />
+            <Input 
+                type="number" 
+                label="Thứ tự hiển thị" 
+                name="displayOrder" 
+                value={formData.displayOrder} 
+                onChange={handleChange} 
+            />
 
-            <div className="border-t border-gray-700 pt-4">
-                <h4 className="text-sm font-semibold text-gray-500 mb-4 uppercase">Liên kết dự án</h4>
-                <div className="grid grid-cols-3 gap-4">
-                    <Input label="GitHub" name="links.repo" value={formData.links.repo} onChange={handleChange} />
-                    <Input label="Live Demo" name="links.live" value={formData.links.live} onChange={handleChange} />
-                    <Input label="Download (APK)" name="links.download" value={formData.links.download} onChange={handleChange} />
-                </div>
-            </div>
-
-            <div className="flex justify-end gap-3 sticky bottom-0 bg-gray-800 py-4 border-t border-gray-700">
-                <Button variant="ghost" onClick={onCancel}>Hủy bỏ</Button>
-                <Button type="submit" variant="primary">Lưu dự án</Button>
+            <div className="flex justify-end gap-3 sticky bottom-0 bg-white dark:bg-gray-800 py-4 border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
+                <Button variant="ghost" onClick={onCancel} type="button">Hủy bỏ</Button>
+                <Button type="submit" variant="primary">Lưu kỹ năng</Button>
             </div>
         </form>
     );
 };
-export default ProjectForm;
+export default SkillForm;
