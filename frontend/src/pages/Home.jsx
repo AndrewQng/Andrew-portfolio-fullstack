@@ -10,23 +10,21 @@ import ContactForm from '../components/sections/ContactForm.jsx';
 import { getUserProfile } from '../services/userService.js';
 
 const Home = () => {
-    const [theme, setTheme] = useState(null);
+    const [profile, setProfile] = useState(null);
 
     useEffect(() => {
-        const fetchTheme = async () => {
+        const fetchProfile = async () => {
             try {
                 const data = await getUserProfile();
-                if (data && data.theme) {
-                    setTheme(data.theme);
-                }
+                setProfile(data);
             } catch (error) {
-                console.error("Lỗi lấy Theme trang chủ:", error);
+                console.error("Lỗi lấy Profile trang chủ:", error);
             }
         };
-        fetchTheme();
+        fetchProfile();
     }, []);
 
-    const t = theme || {
+    const t = profile?.theme || {
         primaryColor: '#3b82f6',
         secondaryColor: '#9333ea',
         heroPrimary: '#3b82f6',
@@ -43,14 +41,14 @@ const Home = () => {
 
     return (
         <div className="relative z-10 font-sans" style={{ '--color-primary': t.primaryColor, '--color-secondary': t.secondaryColor }}>
-            <Navbar />
+            <Navbar brandNameProp={profile?.brandName} />
             
             <main className="relative z-10">
                 <div style={{ '--color-primary': t.heroPrimary || t.primaryColor, '--color-secondary': t.heroSecondary || t.secondaryColor }}>
-                    <Hero />
+                    <Hero profileProp={profile} />
                 </div>
                 <div style={{ '--color-primary': t.aboutPrimary || t.primaryColor, '--color-secondary': t.aboutSecondary || t.secondaryColor }}>
-                    <AboutMe />
+                    <AboutMe profileProp={profile} />
                 </div>
                 <div style={{ '--color-primary': t.projectsPrimary || t.primaryColor, '--color-secondary': t.projectsSecondary || t.secondaryColor }}>
                     <PortfolioShowcase />
@@ -64,7 +62,7 @@ const Home = () => {
                 <ContactForm />
             </main>
 
-            <Footer />
+            <Footer profileProp={profile} />
         </div>
     );
 };

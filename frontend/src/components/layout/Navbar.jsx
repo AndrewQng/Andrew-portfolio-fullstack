@@ -4,11 +4,15 @@ import { ThemeContext } from '../../context/ThemeContext.jsx';
 import { FaSun, FaMoon, FaUserShield } from 'react-icons/fa';
 import { getUserProfile } from '../../services/userService.js';
 
-const Navbar = () => {
+const Navbar = ({ brandNameProp }) => {
     const { theme, toggleTheme } = useContext(ThemeContext);
     const [brandName, setBrandName] = useState('QuyenDev');
 
     useEffect(() => {
+        if (brandNameProp) {
+            setBrandName(brandNameProp);
+            return;
+        }
         const fetchBrand = async () => {
             try {
                 const data = await getUserProfile();
@@ -20,7 +24,7 @@ const Navbar = () => {
             }
         };
         fetchBrand();
-    }, []);
+    }, [brandNameProp]);
 
     // Split brand name into two parts for premium accent coloring (e.g. QuyenDev -> Quyen + Dev)
     const renderBrandName = (name) => {

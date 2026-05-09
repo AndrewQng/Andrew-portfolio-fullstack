@@ -2,11 +2,16 @@ import { useState, useEffect } from 'react';
 import { getUserProfile } from '../../services/userService.js';
 import { motion } from 'framer-motion';
 
-const AboutMe = () => {
+const AboutMe = ({ profileProp }) => {
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        if (profileProp) {
+            setProfile(profileProp);
+            setLoading(false);
+            return;
+        }
         const fetchProfile = async () => {
             try {
                 const data = await getUserProfile();
@@ -18,7 +23,7 @@ const AboutMe = () => {
             }
         };
         fetchProfile();
-    }, []);
+    }, [profileProp]);
 
     if (loading || !profile?.bio?.full) return null;
 

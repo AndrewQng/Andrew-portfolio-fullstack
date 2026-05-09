@@ -24,12 +24,17 @@ const getSocialIcon = (platform) => {
     return <FaLink size={24} />;
 };
 
-const Hero = () => {
+const Hero = ({ profileProp }) => {
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
     const [imageError, setImageError] = useState(false);
 
     useEffect(() => {
+        if (profileProp) {
+            setProfile(profileProp);
+            setLoading(false);
+            return;
+        }
         const fetchProfile = async () => {
             try {
                 const data = await getUserProfile();
@@ -41,7 +46,7 @@ const Hero = () => {
             }
         };
         fetchProfile();
-    }, []);
+    }, [profileProp]);
 
     if (loading) return <LoadingSpinner text="Đang nạp dữ liệu cá nhân..." fullPage={true} />;
     

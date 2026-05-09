@@ -21,11 +21,15 @@ const getSocialIcon = (platform) => {
     return <FaLink size={20} />;
 };
 
-const Footer = () => {
+const Footer = ({ profileProp }) => {
     const [profile, setProfile] = useState(null);
     const currentYear = new Date().getFullYear();
 
     useEffect(() => {
+        if (profileProp) {
+            setProfile(profileProp);
+            return;
+        }
         const fetchProfile = async () => {
             try {
                 const data = await getUserProfile();
@@ -35,7 +39,7 @@ const Footer = () => {
             }
         };
         fetchProfile();
-    }, []);
+    }, [profileProp]);
 
     // Lấy tên đệm + tên để làm Logo (vd: Nguyễn Mạnh Quyền -> Mạnh Quyền)
     const nameParts = profile?.fullName ? profile.fullName.split(' ') : ['Quyen', 'Dev'];
