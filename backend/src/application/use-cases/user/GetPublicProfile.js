@@ -7,6 +7,16 @@ class GetPublicProfile {
     }
 
     async execute(ip = 'local') {
+        const now = Date.now();
+        const lastVisit = visitCooldowns.get(ip);
+        let shouldIncrement = false;
+
+        // Kiem tra va ghi nhan cooldown dong bo ngay lap tuc de chan cac request dong thoi (race condition)
+        if (!lastVisit || (now - lastVisit) > COOLDOWN_TIME) {
+            shouldIncrement = true;
+            visitCooldowns.set(ip, now);
+        }
+
         const user = await this.userRepository.findFirst();
         if (!user) return null;
 
@@ -15,13 +25,8 @@ class GetPublicProfile {
             user.visitorStats = { totalViews: 0, uniqueVisitors: 0, ips: [] };
         }
 
-        const now = Date.now();
-        const lastVisit = visitCooldowns.get(ip);
-
-        // Cộng dồn lượt xem nếu hết thời gian chờ giãn cách
-        if (!lastVisit || (now - lastVisit) > COOLDOWN_TIME) {
+        if (shouldIncrement) {
             user.visitorStats.totalViews += 1;
-            visitCooldowns.set(ip, now);
         }
 
         // Cộng dồn khách truy cập duy nhất
