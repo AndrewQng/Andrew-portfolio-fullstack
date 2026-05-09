@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext.jsx';
 import { ThemeContext } from '../../context/ThemeContext.jsx';
-import { FaProjectDiagram, FaCode, FaUserTie, FaSignOutAlt, FaCog, FaSun, FaMoon, FaBars, FaTimes } from 'react-icons/fa';
+import { FaProjectDiagram, FaCode, FaUserTie, FaSignOutAlt, FaCog, FaSun, FaMoon, FaBars, FaTimes, FaCertificate } from 'react-icons/fa';
 import AdminSidebarTab from '../admin/AdminSidebarTab.jsx';
 
 const AdminLayout = ({ children, activeTab, setActiveTab }) => {
@@ -14,6 +14,7 @@ const AdminLayout = ({ children, activeTab, setActiveTab }) => {
         { id: 'projects', icon: <FaProjectDiagram />, label: 'Quản lý Dự án' },
         { id: 'skills', icon: <FaCode />, label: 'Quản lý Kỹ năng' },
         { id: 'profile', icon: <FaUserTie />, label: 'Hồ sơ Cá nhân' },
+        { id: 'certifications', icon: <FaCertificate />, label: 'Quản lý Chứng chỉ' },
         { id: 'settings', icon: <FaCog />, label: 'Cài đặt Website' },
     ];
 
@@ -96,7 +97,7 @@ const AdminLayout = ({ children, activeTab, setActiveTab }) => {
                     </button>
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-4 md:p-8 transition-colors duration-300">
+                <div className="flex-1 overflow-y-auto transition-colors duration-300">
                     {children}
                 </div>
             </div>

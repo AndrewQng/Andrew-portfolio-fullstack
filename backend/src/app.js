@@ -2,6 +2,7 @@ const express = require('express');
 const dns = require('node:dns'); // Thêm thư viện dns tích hợp sẵn của Node.js
 dns.setServers(['1.1.1.1', '8.8.8.8']);
 const cors = require('cors');
+const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const ensureMongoConnection = require('./presentation/middlewares/ensureMongoConnection');
 
@@ -11,8 +12,14 @@ if (!process.env.VERCEL) {
 
 function buildCorsOptions() {
     const raw = process.env.FRONTEND_URL;
+    const isProd = process.env.NODE_ENV === 'production';
+
     if (!raw) {
-        // origin: true sẽ tự động lấy Origin của request gửi tới (http://localhost:5173)
+        if (isProd) {
+            // Ngăn chặn hoàn toàn bảo mật yếu ở production
+            throw new Error('SECURITY ERROR: Missing FRONTEND_URL in production environment!');
+        }
+        // Ở development, phản chiếu origin động kèm credentials để tiện lợi phát triển
         return { origin: true, credentials: true };
     }
     const origins = raw.split(',').map((s) => s.trim()).filter(Boolean);
@@ -25,6 +32,11 @@ function buildCorsOptions() {
 function createApp() {
     const app = express();
     app.set('trust proxy', 1);
+
+    // Cấu hình Helmet bảo mật HTTP Headers (XSS, Clickjacking, MIME type sniffing, hide power-by)
+    app.use(helmet({
+        contentSecurityPolicy: false // Tắt CSP để tránh xung đột với ảnh hoặc CDN bên thứ ba trong API Client độc lập
+    }));
 
     app.use(cors(buildCorsOptions()));
     app.use(cookieParser());

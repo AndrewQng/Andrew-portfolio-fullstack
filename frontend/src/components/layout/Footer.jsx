@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
-import { FaGithub, FaLinkedin, FaFacebook, FaLink } from 'react-icons/fa';
+import { 
+    FaGithub, FaLinkedin, FaFacebook, FaTwitter, FaInstagram, 
+    FaYoutube, FaTiktok, FaBehance, FaDribbble, FaGlobe, 
+    FaLink 
+} from 'react-icons/fa';
 import { getUserProfile } from '../../services/userService.js';
 
 const getSocialIcon = (platform) => {
@@ -7,6 +11,13 @@ const getSocialIcon = (platform) => {
     if (p.includes('github')) return <FaGithub size={20} />;
     if (p.includes('linkedin')) return <FaLinkedin size={20} />;
     if (p.includes('facebook')) return <FaFacebook size={20} />;
+    if (p.includes('twitter') || p.includes('x.com')) return <FaTwitter size={20} />;
+    if (p.includes('instagram')) return <FaInstagram size={20} />;
+    if (p.includes('youtube')) return <FaYoutube size={20} />;
+    if (p.includes('tiktok')) return <FaTiktok size={20} />;
+    if (p.includes('behance')) return <FaBehance size={20} />;
+    if (p.includes('dribbble')) return <FaDribbble size={20} />;
+    if (p.includes('website')) return <FaGlobe size={20} />;
     return <FaLink size={20} />;
 };
 
@@ -46,6 +57,19 @@ const Footer = () => {
                         {profile?.phone && <p>SĐT: {profile.phone}</p>}
                         {profile?.address && <p>Địa chỉ: {profile.address}</p>}
                     </div>
+
+                    {profile?.visitorStats && (
+                        <div className="flex flex-wrap gap-3 mt-4 text-xs font-semibold justify-center md:justify-start">
+                            <span className="flex items-center gap-1.5 px-3 py-1 bg-blue-100 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 rounded-full border border-blue-200 dark:border-blue-800/30 transition-colors duration-300">
+                                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
+                                Lượt xem: {profile.visitorStats.totalViews}
+                            </span>
+                            <span className="flex items-center gap-1.5 px-3 py-1 bg-purple-100 dark:bg-purple-900/20 text-purple-700 dark:text-purple-400 rounded-full border border-purple-200 dark:border-purple-800/30 transition-colors duration-300">
+                                <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse" />
+                                Khách truy cập: {profile.visitorStats.uniqueVisitors}
+                            </span>
+                        </div>
+                    )}
                 </div>
 
                 <div className="flex gap-6 text-gray-500 dark:text-gray-400">

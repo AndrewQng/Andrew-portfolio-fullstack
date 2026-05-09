@@ -4,7 +4,7 @@ import ProjectManager from '../components/admin/ProjectManager.jsx';
 import ProfileManager from '../components/admin/ProfileManager.jsx';
 import SkillManager from '../components/admin/SkillManager.jsx';
 import SettingsManager from '../components/admin/SettingsManager.jsx';
-// import CertificationManager from '../components/admin/CertificationManager.jsx';
+import CertificationManager from '../components/admin/CertificationManager.jsx';
 
 const AdminDashboard = () => {
     // Quản lý xem Admin đang bấm vào tab nào trên Sidebar
@@ -27,7 +27,7 @@ const AdminDashboard = () => {
             {activeTab === 'settings' && <SettingsManager />}
 
             {/* Dành cho chứng chỉ và hành trình (Timeline) */}
-            {/* {activeTab === 'certifications' && <CertificationManager />} */}
+            {activeTab === 'certifications' && <CertificationManager />}
 
         </AdminLayout>
     );

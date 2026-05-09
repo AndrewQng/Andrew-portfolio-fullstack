@@ -27,26 +27,26 @@ const CertificationForm = ({ onSave, onCancel, initialData }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Input label="Tên chứng chỉ *" name="title" value={formData.title} onChange={handleChange} required />
                 <Input label="Tổ chức cấp (Issuer) *" name="issuer" value={formData.issuer} onChange={handleChange} required />
             </div>
             
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Input type="date" label="Ngày cấp" name="issueDate" value={formatDateForInput(formData.issueDate)} onChange={handleChange} />
                 <Input type="date" label="Ngày hết hạn" name="expiryDate" value={formatDateForInput(formData.expiryDate)} onChange={handleChange} />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Input label="Link kiểm chứng (URL)" name="credentialUrl" value={formData.credentialUrl} onChange={handleChange} />
                 <Input label="Link ảnh Thumbnail" name="thumbnail" value={formData.thumbnail} onChange={handleChange} />
             </div>
             
             <TextArea label="Mô tả chi tiết" name="description" value={formData.description} onChange={handleChange} />
 
-            <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-700">
-                <Button variant="ghost" onClick={onCancel}>Hủy</Button>
+            <div className="flex justify-end gap-3 pt-6 border-t border-gray-200 dark:border-gray-700 mt-8 transition-colors duration-300">
+                <Button variant="ghost" onClick={onCancel} type="button">Hủy bỏ</Button>
                 <Button type="submit" variant="primary">Lưu Chứng Chỉ</Button>
             </div>
         </form>

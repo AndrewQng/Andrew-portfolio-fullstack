@@ -8,6 +8,11 @@ class UserRepository {
         return docs.map((d) => UserMapper.toEntity(d));
     }
 
+    async findFirst() {
+        const doc = await UserModel.findOne().exec();
+        return UserMapper.toEntity(doc);
+    }
+
     async findById(id) {
         if (!mongoose.Types.ObjectId.isValid(id)) return null;
         const doc = await UserModel.findById(id).exec();

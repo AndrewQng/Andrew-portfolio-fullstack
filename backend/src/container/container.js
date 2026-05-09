@@ -15,6 +15,8 @@ const CertificationRepository = require('../infrastructure/repositories/certific
 
 const GetUserById = require('../application/use-cases/user/GetUserById');
 const UpdateUser = require('../application/use-cases/user/UpdateUser');
+const GetPublicProfile = require('../application/use-cases/user/GetPublicProfile');
+const UserController = require('../presentation/controllers/UserController');
 
 const GetAllProjects = require('../application/use-cases/project/GetAllProjects');
 const GetProjectById = require('../application/use-cases/project/GetProjectById');
@@ -45,6 +47,8 @@ container.register({
     adminProfileController: asClass(AdminProfileController).singleton(),
     getUserById: asClass(GetUserById).singleton(),
     updateUser: asClass(UpdateUser).singleton(),
+    getPublicProfile: asClass(GetPublicProfile).singleton(),
+    userController: asClass(UserController).singleton(),
     userRepository: asClass(UserRepository).singleton(),
 
     projectController: asClass(ProjectController).singleton(),

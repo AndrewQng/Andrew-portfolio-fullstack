@@ -79,8 +79,8 @@ const ProjectForm = ({ onSave, onCancel, initialData }) => {
             <Input label="Gallery (Link ảnh, cách nhau dấu phẩy)" name="gallery" value={formData.gallery} onChange={handleChange} />
             <Input label="Metrics (Thành tựu, cách nhau dấu phẩy)" name="metrics" value={formData.metrics} onChange={handleChange} />
 
-            <div className="border-t border-gray-700 pt-4">
-                <h4 className="text-sm font-semibold text-gray-500 mb-4 uppercase">Liên kết dự án</h4>
+            <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
+                <h4 className="text-sm font-semibold text-gray-450 dark:text-gray-500 mb-4 uppercase">Liên kết dự án</h4>
                 <div className="grid grid-cols-3 gap-4">
                     <Input label="GitHub" name="links.repo" value={formData.links?.repo} onChange={handleChange} />
                     <Input label="Live Demo" name="links.live" value={formData.links?.live} onChange={handleChange} />
@@ -88,7 +88,6 @@ const ProjectForm = ({ onSave, onCancel, initialData }) => {
                 </div>
             </div>
 
-            {/* Khác */}
             <div className="flex items-center gap-3">
                 <input 
                     type="checkbox" 
@@ -96,12 +95,12 @@ const ProjectForm = ({ onSave, onCancel, initialData }) => {
                     name="isFeatured" 
                     checked={formData.isFeatured} 
                     onChange={handleChange} 
-                    className="w-5 h-5 rounded border-gray-600 bg-gray-700 text-blue-500 focus:ring-blue-500 focus:ring-offset-gray-800"
+                    className="w-5 h-5 rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-blue-500 focus:ring-blue-500 focus:ring-offset-gray-800"
                 />
-                <label htmlFor="isFeatured" className="text-white font-medium">Nổi bật (Featured Project)</label>
+                <label htmlFor="isFeatured" className="text-gray-900 dark:text-white font-medium">Nổi bật (Featured Project)</label>
             </div>
 
-            <div className="flex justify-end gap-3 sticky bottom-0 bg-white dark:bg-gray-800 py-4 border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
+            <div className="flex justify-end gap-3 pt-6 border-t border-gray-200 dark:border-gray-700 mt-8 transition-colors duration-300">
                 <Button variant="ghost" onClick={onCancel} type="button">Hủy bỏ</Button>
                 <Button type="submit" variant="primary">Lưu dự án</Button>
             </div>

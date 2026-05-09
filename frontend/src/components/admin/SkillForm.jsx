@@ -46,7 +46,7 @@ const SkillForm = ({ onSave, onCancel, initialData }) => {
                 onChange={handleChange} 
             />
 
-            <div className="flex justify-end gap-3 sticky bottom-0 bg-white dark:bg-gray-800 py-4 border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
+            <div className="flex justify-end gap-3 pt-6 border-t border-gray-200 dark:border-gray-700 mt-8 transition-colors duration-300">
                 <Button variant="ghost" onClick={onCancel} type="button">Hủy bỏ</Button>
                 <Button type="submit" variant="primary">Lưu kỹ năng</Button>
             </div>

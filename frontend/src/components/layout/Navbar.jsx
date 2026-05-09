@@ -1,10 +1,69 @@
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { ThemeContext } from '../../context/ThemeContext.jsx';
 import { FaSun, FaMoon, FaUserShield } from 'react-icons/fa';
+import { getUserProfile } from '../../services/userService.js';
 
 const Navbar = () => {
     const { theme, toggleTheme } = useContext(ThemeContext);
+    const [brandName, setBrandName] = useState('QuyenDev');
+
+    useEffect(() => {
+        const fetchBrand = async () => {
+            try {
+                const data = await getUserProfile();
+                if (data && data.brandName) {
+                    setBrandName(data.brandName);
+                }
+            } catch (error) {
+                console.error("Lỗi lấy Brand Name:", error);
+            }
+        };
+        fetchBrand();
+    }, []);
+
+    // Split brand name into two parts for premium accent coloring (e.g. QuyenDev -> Quyen + Dev)
+    const renderBrandName = (name) => {
+        if (!name) return <>Quyen<span className="text-gray-900 dark:text-white transition-colors duration-300">Dev</span></>;
+        
+        // Split on uppercase characters if CamelCase (like QuyenDev)
+        const uppercaseIndices = [];
+        for (let i = 1; i < name.length; i++) {
+            if (name[i] === name[i].toUpperCase() && name[i] !== ' ' && name[i-1] !== ' ') {
+                uppercaseIndices.push(i);
+            }
+        }
+        
+        if (uppercaseIndices.length > 0) {
+            const splitIndex = uppercaseIndices[0];
+            return (
+                <>
+                    <span style={{ color: 'var(--color-primary)' }}>{name.substring(0, splitIndex)}</span>
+                    <span className="text-gray-900 dark:text-white transition-colors duration-300">{name.substring(splitIndex)}</span>
+                </>
+            );
+        }
+        
+        // Split by space
+        const parts = name.split(' ');
+        if (parts.length > 1) {
+            return (
+                <>
+                    <span style={{ color: 'var(--color-primary)' }}>{parts[0]}</span>
+                    <span className="text-gray-900 dark:text-white transition-colors duration-300"> {parts.slice(1).join(' ')}</span>
+                </>
+            );
+        }
+        
+        // Split in half
+        const half = Math.ceil(name.length / 2);
+        return (
+            <>
+                <span style={{ color: 'var(--color-primary)' }}>{name.substring(0, half)}</span>
+                <span className="text-gray-900 dark:text-white transition-colors duration-300">{name.substring(half)}</span>
+            </>
+        );
+    };
 
     return (
         <nav className="fixed w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
@@ -12,8 +71,7 @@ const Navbar = () => {
                 
                 {/* Logo thương hiệu */}
                 <Link to="/" className="text-2xl font-bold tracking-wider">
-                    <span style={{ color: 'var(--color-primary)' }}>Quyen</span>
-                    <span className="text-gray-900 dark:text-white transition-colors duration-300">Dev</span>
+                    {renderBrandName(brandName)}
                 </Link>
 
                 {/* Menu điều hướng chính */}

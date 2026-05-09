@@ -44,7 +44,39 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4 relative z-10">
+        <div className="min-h-screen w-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-gray-50 via-slate-100 to-zinc-200 dark:from-gray-950 dark:via-slate-900 dark:to-zinc-950 transition-colors duration-300">
+            {/* Background ambient orbs */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <motion.div 
+                    animate={{
+                        x: [0, 80, 0],
+                        y: [0, -50, 0],
+                        scale: [1, 1.2, 1]
+                    }}
+                    transition={{
+                        duration: 15,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                    }}
+                    className="absolute -top-40 -left-40 w-96 h-96 rounded-full opacity-15 dark:opacity-30 blur-[100px]"
+                    style={{ background: 'var(--color-primary)' }}
+                />
+                <motion.div 
+                    animate={{
+                        x: [0, -80, 0],
+                        y: [0, 50, 0],
+                        scale: [1, 1.2, 1]
+                    }}
+                    transition={{
+                        duration: 18,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                    }}
+                    className="absolute -bottom-40 -right-40 w-96 h-96 rounded-full opacity-20 dark:opacity-35 blur-[100px]"
+                    style={{ background: 'var(--color-secondary)' }}
+                />
+            </div>
+
             <AnimatePresence mode="wait">
                 {!isSuccess ? (
                     <motion.div 

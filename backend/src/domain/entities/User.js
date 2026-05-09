@@ -4,6 +4,7 @@ class User {
         username,
         password,
         fullName,
+        brandName = 'QuyenDev',
         email,
         phone,
         jobTitle,
@@ -12,12 +13,14 @@ class User {
         resumeUrl,
         bio = { short: '', full: '' },
         socialLinks = [],
-        theme
+        theme,
+        visitorStats = { totalViews: 0, uniqueVisitors: 0, ips: [] }
     }) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.fullName = fullName;
+        this.brandName = brandName;
         this.email = email;
         this.phone = phone;
         this.jobTitle = jobTitle;
@@ -26,7 +29,22 @@ class User {
         this.resumeUrl = resumeUrl;
         this.bio = bio;
         this.socialLinks = socialLinks;
-        this.theme = theme || { primaryColor: '#3b82f6', secondaryColor: '#9333ea', mode: 'dark' };
+        this.theme = theme || { 
+            primaryColor: '#3b82f6', 
+            secondaryColor: '#9333ea', 
+            mode: 'dark',
+            heroPrimary: '#3b82f6',
+            heroSecondary: '#9333ea',
+            aboutPrimary: '#10b981',
+            aboutSecondary: '#3b82f6',
+            projectsPrimary: '#f59e0b',
+            projectsSecondary: '#ef4444',
+            skillsPrimary: '#ec4899',
+            skillsSecondary: '#8b5cf6',
+            experiencePrimary: '#06b6d4',
+            experienceSecondary: '#3b82f6'
+        };
+        this.visitorStats = visitorStats;
 
         this.validate();
     }

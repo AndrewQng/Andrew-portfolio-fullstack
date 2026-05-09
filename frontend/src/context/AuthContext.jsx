@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import { setToken } from '../services/apiClient';
 import { refreshAPI } from '../services/authService';
+import LoadingSpinner from '../components/ui/LoadingSpinner.jsx';
 
 export const AuthContext = createContext();
 
@@ -42,7 +43,7 @@ export const AuthProvider = ({ children }) => {
 
     // Chặn render các Route khi đang gọi API Refresh
     if (isAuthLoading) {
-        return <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950 text-gray-500">Đang tải phiên làm việc...</div>;
+        return <LoadingSpinner text="Đang tải phiên làm việc..." fullPage={true} />;
     }
 
     return (

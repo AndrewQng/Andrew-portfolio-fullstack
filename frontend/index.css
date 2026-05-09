@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-primary: #3b82f6;
+  --color-secondary: #9333ea;
+}
+
 /* Custom cuộn trang mượt mà */
 html {
   scroll-behavior: smooth;

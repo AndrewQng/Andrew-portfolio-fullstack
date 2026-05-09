@@ -8,6 +8,7 @@ class UserMapper {
             username: dbModel.username,
             password: dbModel.password,
             fullName: dbModel.fullName,
+            brandName: dbModel.brandName,
             email: dbModel.email,
             phone: dbModel.phone,
             jobTitle: dbModel.jobTitle,
@@ -15,7 +16,9 @@ class UserMapper {
             avatar: dbModel.avatar,
             resumeUrl: dbModel.resumeUrl,
             bio: dbModel.bio,
-            socialLinks: dbModel.socialLinks
+            socialLinks: dbModel.socialLinks,
+            theme: dbModel.theme,
+            visitorStats: dbModel.visitorStats
         });
     }
 
@@ -24,6 +27,7 @@ class UserMapper {
             username: entity.username,
             password: entity.password,
             fullName: entity.fullName,
+            brandName: entity.brandName,
             email: entity.email,
             phone: entity.phone,
             jobTitle: entity.jobTitle,
@@ -31,7 +35,9 @@ class UserMapper {
             avatar: entity.avatar,
             resumeUrl: entity.resumeUrl,
             bio: entity.bio,
-            socialLinks: entity.socialLinks
+            socialLinks: entity.socialLinks,
+            theme: entity.theme,
+            visitorStats: entity.visitorStats
         };
     }
 }
