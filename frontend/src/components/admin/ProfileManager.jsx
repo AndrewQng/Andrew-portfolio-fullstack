@@ -99,12 +99,12 @@ const ProfileManager = () => {
         e.preventDefault();
         setSaving(true);
         try {
-            await updateUserProfile(formData._id, formData);
+            await updateUserProfile(formData.id || formData._id, formData);
             // Thay alert thành Toast Success
             showToast('🎉 Đã cập nhật hồ sơ thành công!', 'success');
         } catch (error) {
             // Thay alert thành Toast Error kiểu Hybrid (ưu tiên message từ Backend)
-            const errorMsg = error.response?.data?.message || 'Lỗi khi lưu dữ liệu. Vui lòng thử lại!';
+            const errorMsg = error.response?.data?.error || error.response?.data?.message || 'Lỗi khi lưu dữ liệu. Vui lòng thử lại!';
             showToast(errorMsg, 'error');
         } finally {
             setSaving(false);

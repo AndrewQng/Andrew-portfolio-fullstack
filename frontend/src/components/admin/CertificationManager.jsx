@@ -68,7 +68,7 @@ const CertificationManager = () => {
             setEditingCert(null);
             fetchCerts();
         } catch (error) {
-            const errorMsg = error.response?.data?.message || 'Lỗi khi lưu chứng chỉ!';
+            const errorMsg = error.response?.data?.error || error.response?.data?.message || 'Lỗi khi lưu chứng chỉ!';
             showToast(errorMsg, 'error');
         }
     };
@@ -85,7 +85,7 @@ const CertificationManager = () => {
             setCerts(certs.filter(c => (c._id || c.id) !== confirmModal.certId));
             showToast('🗑️ Đã xóa chứng chỉ thành công!', 'success');
         } catch (error) {
-            const errorMsg = error.response?.data?.message || 'Lỗi khi xóa chứng chỉ!';
+            const errorMsg = error.response?.data?.error || error.response?.data?.message || 'Lỗi khi xóa chứng chỉ!';
             showToast(errorMsg, 'error');
         } finally {
             setConfirmModal({ isOpen: false, certId: null, isDeleting: false });

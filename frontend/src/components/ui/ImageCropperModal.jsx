@@ -93,7 +93,9 @@ const ImageCropperModal = ({ isOpen, imageSrc, onCrop, onClose }) => {
             0, 0, cropSize, cropSize     // dest coord
         );
 
-        const base64 = canvas.toDataURL('image/jpeg', 0.85);
+        const isPng = imageSrc && imageSrc.startsWith('data:image/png');
+        const format = isPng ? 'image/png' : 'image/jpeg';
+        const base64 = canvas.toDataURL(format, isPng ? undefined : 0.85);
         onCrop(base64);
         onClose();
     };

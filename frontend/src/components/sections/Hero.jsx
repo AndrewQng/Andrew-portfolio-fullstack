@@ -28,12 +28,19 @@ const Hero = ({ profileProp }) => {
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
     const [imageError, setImageError] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+
         if (profileProp) {
             setProfile(profileProp);
             setLoading(false);
-            return;
+            return () => window.removeEventListener('resize', checkMobile);
         }
         const fetchProfile = async () => {
             try {
@@ -46,6 +53,8 @@ const Hero = ({ profileProp }) => {
             }
         };
         fetchProfile();
+
+        return () => window.removeEventListener('resize', checkMobile);
     }, [profileProp]);
 
     if (loading) return <LoadingSpinner text="Đang nạp dữ liệu cá nhân..." fullPage={true} />;
@@ -77,7 +86,7 @@ const Hero = ({ profileProp }) => {
             <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
                 {/* Ambient pulsing blob 1 */}
                 <motion.div 
-                    animate={{
+                    animate={isMobile ? {} : {
                         x: [0, 80, -40, 0],
                         y: [0, -60, 80, 0],
                         scale: [1, 1.15, 0.85, 1],
@@ -92,7 +101,7 @@ const Hero = ({ profileProp }) => {
                 />
                 {/* Ambient pulsing blob 2 */}
                 <motion.div 
-                    animate={{
+                    animate={isMobile ? {} : {
                         x: [0, -100, 60, 0],
                         y: [0, 80, -50, 0],
                         scale: [1, 0.85, 1.2, 1],
@@ -106,7 +115,7 @@ const Hero = ({ profileProp }) => {
                     style={{ background: 'var(--color-secondary)' }}
                 />
                 {/* Floating micro-particle bokeh orbs */}
-                {[...Array(12)].map((_, i) => (
+                {!isMobile && [...Array(12)].map((_, i) => (
                     <motion.div
                         key={i}
                         initial={{ 
@@ -136,7 +145,7 @@ const Hero = ({ profileProp }) => {
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
-                    className="text-center lg:text-left"
+                    className="text-center lg:text-left order-2 lg:order-1"
                 >
                     <motion.h2 variants={itemVariants} className="font-bold tracking-widest uppercase mb-4 text-sm md:text-base" style={{ color: 'var(--color-primary)' }}>
                         Xin chào, tôi là
@@ -199,7 +208,7 @@ const Hero = ({ profileProp }) => {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 1 }}
-                    className="relative mx-auto w-72 h-72 md:w-96 md:h-96"
+                    className="relative mx-auto w-72 h-72 md:w-96 md:h-96 order-1 lg:order-2"
                 >
                     <div 
                         className="absolute inset-0 rounded-full blur-2xl opacity-30"

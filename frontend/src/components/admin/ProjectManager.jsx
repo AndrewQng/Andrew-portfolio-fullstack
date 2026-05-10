@@ -91,7 +91,7 @@ const ProjectManager = () => {
             setEditingProject(null);
             fetchProjects(); // Tải lại danh sách
         } catch (error) {
-            const errorMsg = error.response?.data?.message || 'Lỗi khi lưu Dự án!';
+            const errorMsg = error.response?.data?.error || error.response?.data?.message || 'Lỗi khi lưu Dự án!';
             showToast(errorMsg, 'error');
         }
     };

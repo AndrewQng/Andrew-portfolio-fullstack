@@ -3,15 +3,27 @@ import { motion } from 'framer-motion';
 
 const MouseEffect = () => {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+
         const updateMousePosition = (e) => {
             setMousePosition({ x: e.clientX, y: e.clientY });
         };
 
         window.addEventListener('mousemove', updateMousePosition);
-        return () => window.removeEventListener('mousemove', updateMousePosition);
+        return () => {
+            window.removeEventListener('resize', checkMobile);
+            window.removeEventListener('mousemove', updateMousePosition);
+        };
     }, []);
+
+    if (isMobile) return null;
 
     return (
         <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
