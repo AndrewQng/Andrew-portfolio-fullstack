@@ -16,6 +16,7 @@ class ProjectController {
     getAll = async (req, res) => {
         try {
             const projects = await this.getAllProjects.execute();
+            res.set('Cache-Control', 'public, max-age=60, s-maxage=3600, stale-while-revalidate=10');
             res.json(projects);
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -26,6 +27,7 @@ class ProjectController {
         try {
             const project = await this.getProjectById.execute(req.params.id);
             if (!project) return res.status(404).json({ error: 'Project not found' });
+            res.set('Cache-Control', 'public, max-age=60, s-maxage=3600, stale-while-revalidate=10');
             res.json(project);
         } catch (error) {
             res.status(500).json({ error: error.message });

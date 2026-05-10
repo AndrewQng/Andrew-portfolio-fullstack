@@ -5,13 +5,13 @@ const Certification = require('../../../domain/entities/Certification');
 
 class CertificationRepository {
     async findAll() {
-        const docs = await CertModel.find().sort({ createdAt: -1 }).exec();
+        const docs = await CertModel.find().sort({ createdAt: -1 }).lean().exec();
         return docs.map((doc) => CertificationMapper.toEntity(doc));
     }
 
     async findById(id) {
         if (!mongoose.Types.ObjectId.isValid(id)) return null;
-        const doc = await CertModel.findById(id).exec();
+        const doc = await CertModel.findById(id).lean().exec();
         return CertificationMapper.toEntity(doc);
     }
 

@@ -16,6 +16,7 @@ class SkillController {
     getAll = async (req, res) => {
         try {
             const items = await this.getAllSkills.execute();
+            res.set('Cache-Control', 'public, max-age=60, s-maxage=3600, stale-while-revalidate=10');
             res.json(items);
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -26,6 +27,7 @@ class SkillController {
         try {
             const entity = await this.getSkillById.execute(req.params.id);
             if (!entity) return res.status(404).json({ error: 'Skill not found' });
+            res.set('Cache-Control', 'public, max-age=60, s-maxage=3600, stale-while-revalidate=10');
             res.json(entity);
         } catch (error) {
             res.status(500).json({ error: error.message });

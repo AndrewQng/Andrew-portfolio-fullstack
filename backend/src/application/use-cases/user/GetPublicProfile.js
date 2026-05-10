@@ -25,18 +25,29 @@ class GetPublicProfile {
             user.visitorStats = { totalViews: 0, uniqueVisitors: 0, ips: [] };
         }
 
+        let hasChanges = false;
+
         if (shouldIncrement) {
             user.visitorStats.totalViews += 1;
+            hasChanges = true;
         }
 
         // Cộng dồn khách truy cập duy nhất
         if (ip && !user.visitorStats.ips.includes(ip)) {
             user.visitorStats.ips.push(ip);
+            if (user.visitorStats.ips.length > 200) {
+                user.visitorStats.ips.shift(); // Xóa IP cũ tránh phình to document
+            }
             user.visitorStats.uniqueVisitors += 1;
+            hasChanges = true;
         }
 
-        // Cập nhật lại thực thể thông qua UserRepository
-        return this.userRepository.update(user.id, user);
+        if (hasChanges) {
+            // Cập nhật lại thực thể thông qua UserRepository
+            return this.userRepository.update(user.id, user);
+        }
+
+        return user;
     }
 }
 

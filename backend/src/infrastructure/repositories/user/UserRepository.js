@@ -4,23 +4,23 @@ const UserMapper = require('../../mappers/UserMapper');
 
 class UserRepository {
     async findAll() {
-        const docs = await UserModel.find().sort({ createdAt: -1 }).exec();
+        const docs = await UserModel.find().sort({ createdAt: -1 }).lean().exec();
         return docs.map((d) => UserMapper.toEntity(d));
     }
 
     async findFirst() {
-        const doc = await UserModel.findOne().exec();
+        const doc = await UserModel.findOne().lean().exec();
         return UserMapper.toEntity(doc);
     }
 
     async findById(id) {
         if (!mongoose.Types.ObjectId.isValid(id)) return null;
-        const doc = await UserModel.findById(id).exec();
+        const doc = await UserModel.findById(id).lean().exec();
         return UserMapper.toEntity(doc);
     }
 
     async findByUsername(username) {
-        const doc = await UserModel.findOne({ username });
+        const doc = await UserModel.findOne({ username }).lean().exec();
         return UserMapper.toEntity(doc);
     }
 

@@ -1,6 +1,8 @@
 const express = require('express');
-const dns = require('node:dns'); // Thêm thư viện dns tích hợp sẵn của Node.js
-dns.setServers(['1.1.1.1', '8.8.8.8']);
+if (!process.env.VERCEL) {
+    const dns = require('node:dns'); // Thêm thư viện dns tích hợp sẵn của Node.js
+    dns.setServers(['1.1.1.1', '8.8.8.8']);
+}
 const cors = require('cors');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');

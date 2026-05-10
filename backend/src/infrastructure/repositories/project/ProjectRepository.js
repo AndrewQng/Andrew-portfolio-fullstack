@@ -38,13 +38,13 @@ function mergeTimeline(current, patch) {
 
 class ProjectRepository {
     async findAll() {
-        const projects = await ProjectModel.find().populate('techStack').exec();
+        const projects = await ProjectModel.find().populate('techStack').lean().exec();
         return projects.map((project) => ProjectMapper.toEntity(project));
     }
 
     async findById(id) {
         if (!mongoose.Types.ObjectId.isValid(id)) return null;
-        const doc = await ProjectModel.findById(id).populate('techStack').exec();
+        const doc = await ProjectModel.findById(id).populate('techStack').lean().exec();
         return ProjectMapper.toEntity(doc);
     }
 
@@ -54,6 +54,7 @@ class ProjectRepository {
             const doc = await ProjectModel.create(dbData);
             const populated = await ProjectModel.findById(doc._id)
                 .populate('techStack')
+                .lean()
                 .exec();
             return ProjectMapper.toEntity(populated);
         } catch (e) {
@@ -108,6 +109,7 @@ class ProjectRepository {
         }
         const populated = await ProjectModel.findById(existingDoc._id)
             .populate('techStack')
+            .lean()
             .exec();
         return ProjectMapper.toEntity(populated);
     }

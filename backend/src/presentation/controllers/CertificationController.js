@@ -16,6 +16,7 @@ class CertificationController {
     getAll = async (req, res) => {
         try {
             const items = await this.getAllCertifications.execute();
+            res.set('Cache-Control', 'public, max-age=60, s-maxage=3600, stale-while-revalidate=10');
             res.json(items);
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -26,6 +27,7 @@ class CertificationController {
         try {
             const entity = await this.getCertificationById.execute(req.params.id);
             if (!entity) return res.status(404).json({ error: 'Certification not found' });
+            res.set('Cache-Control', 'public, max-age=60, s-maxage=3600, stale-while-revalidate=10');
             res.json(entity);
         } catch (error) {
             res.status(500).json({ error: error.message });

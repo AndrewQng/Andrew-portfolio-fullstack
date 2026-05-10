@@ -5,13 +5,13 @@ const Skill = require('../../../domain/entities/Skill');
 
 class SkillRepository {
     async findAll() {
-        const docs = await SkillModel.find().sort({ displayOrder: 1, name: 1 }).exec();
+        const docs = await SkillModel.find().sort({ displayOrder: 1, name: 1 }).lean().exec();
         return docs.map((d) => SkillMapper.toEntity(d));
     }
 
     async findById(id) {
         if (!mongoose.Types.ObjectId.isValid(id)) return null;
-        const doc = await SkillModel.findById(id).exec();
+        const doc = await SkillModel.findById(id).lean().exec();
         return SkillMapper.toEntity(doc);
     }
 
