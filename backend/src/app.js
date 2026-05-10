@@ -16,15 +16,28 @@ function buildCorsOptions() {
     const raw = process.env.FRONTEND_URL;
     const isProd = process.env.NODE_ENV === 'production';
 
+    const defaultOrigins = [
+        'https://andrewngf.vercel.app',
+        'https://andrew-portfolio-fullstack.vercel.app'
+    ];
+
     if (!raw) {
         if (isProd) {
-            // Ngăn chặn hoàn toàn bảo mật yếu ở production
-            throw new Error('SECURITY ERROR: Missing FRONTEND_URL in production environment!');
+            return { origin: defaultOrigins, credentials: true };
         }
         // Ở development, phản chiếu origin động kèm credentials để tiện lợi phát triển
         return { origin: true, credentials: true };
     }
+
     const origins = raw.split(',').map((s) => s.trim().replace(/\/$/, '')).filter(Boolean);
+    
+    // Đảm bảo cả hai Vercel domains đều nằm trong origins được cho phép
+    defaultOrigins.forEach(o => {
+        if (!origins.includes(o)) {
+            origins.push(o);
+        }
+    });
+
     return {
         origin: origins.length === 1 ? origins[0] : origins,
         credentials: true
